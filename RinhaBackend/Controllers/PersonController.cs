@@ -18,6 +18,17 @@ public class PersonController : ControllerBase
     [HttpPost("pessoas")]
     public async Task<IActionResult> Post([FromBody] PersonDto personDto)
     {
+        if(personDto.Apelido.Length >= 32 || personDto.Nome.Length >= 100){
+            return new ObjectResult(null){StatusCode = StatusCodes.Status422UnprocessableEntity};
+        }
+        
+        if(personDto.Stack != null){
+            foreach(var tech in personDto.Stack){
+                if(tech.Length >= 32){
+                    return new ObjectResult(null){StatusCode = StatusCodes.Status422UnprocessableEntity};
+                }
+            }
+        }
         var id = await _personRepository.CreatePerson(personDto);
         var interpolatedString = $"/pessoas/{id}";
         Response.Headers.Location = interpolatedString;

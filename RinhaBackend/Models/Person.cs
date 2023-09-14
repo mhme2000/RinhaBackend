@@ -7,7 +7,7 @@ namespace RinhaBackend.Models;
 public class Person
 {
     private Person(){}
-    public Person(string surname, string name, DateTime birthDate, List<string> stacks)
+    public Person(string surname, string name, string birthDate, List<string> stacks)
     {
         var t = Uuid7.TimeNs();
         Id = Uuid7.Guid(t).ToString();
@@ -19,7 +19,7 @@ public class Person
     public string Id { get; private set; }
     public string Surname { get; private set; }
     public string Name { get; private set; }
-    public DateTime BirthDate { get; private set; }
+    public string BirthDate { get; private set; }
     public string Stacks { get; private set; }
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public string SearchText {get; private set;}

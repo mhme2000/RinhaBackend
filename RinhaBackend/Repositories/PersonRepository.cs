@@ -13,6 +13,8 @@ public class PersonRepository : IPersonRepository
     }
     public async Task<string> CreatePerson(PersonDto personDto)
     {
+        var oldPerson = await GetPersonByTerm(personDto.Apelido);
+        if(oldPerson.Any()) return string.Empty; 
         var person = new Person(personDto.Apelido, personDto.Nome, personDto.Nascimento, personDto.Stack);
         await _context.Person.AddAsync(person);
         await _context.SaveChangesAsync();

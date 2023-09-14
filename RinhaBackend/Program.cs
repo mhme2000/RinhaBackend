@@ -10,26 +10,6 @@ builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddDbContext<PersonContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
-     {
-         options.InvalidModelStateResponseFactory = (context) =>
-            {
-                var errors = context.ModelState.Values.SelectMany(x => x.Errors.Select(p => new
-               {
-                   ErrorCode = ((int)HttpStatusCode.UnprocessableEntity).ToString(CultureInfo.CurrentCulture),
-                    ErrorMessage = p.ErrorMessage,
-                    ServerErrorMessage = string.Empty
-                })).ToList();
-                var result = new
-                {
-                    Error = errors,
-                    ResponseCode = (int)HttpStatusCode.UnprocessableEntity,
-                    ResponseMessage = "Validação falhou",
-
-                };
-                return new UnprocessableEntityObjectResult(result);
-            };
-     });
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {

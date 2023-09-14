@@ -7,11 +7,11 @@ services:
       - db
     expose:
       - "80"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: '1GB'
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.50'
+    #       memory: '1GB'
 
   api2: # API - Instância 01
     build: .
@@ -20,11 +20,11 @@ services:
       - db
     expose:
       - "80"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.60'
-          memory: '1GB'
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.60'
+    #       memory: '1GB'
 
   nginx: # Load Balancer
     image: nginx:latest
@@ -35,11 +35,11 @@ services:
       - api2
     ports:
       - "9999:9999"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.20'
-          memory: '0.5GB'
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.20'
+    #       memory: '0.5GB'
 
   db: # Banco de dados
     image: postgres
@@ -50,8 +50,8 @@ services:
       POSTGRES_DB: rinha
     ports:
       - "5432:5432"
-    deploy:
-      resources:
-        limits:
-          cpus: '0.20'
-          memory: '0.5GB'
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '0.20'
+    #       memory: '0.5GB'
