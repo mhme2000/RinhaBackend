@@ -1,20 +1,17 @@
-﻿using UuidExtensions;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RinhaBackend.Models;
 
-public class Person
+public class PersonDto
 {
-    public Person(string surname, string name, DateOnly birthDate, List<string> stacks)
-    {
-        Id = new Uuid7().ToString();
-        Surname = surname;
-        Name = name;
-        BirthDate = birthDate;
-        Stacks = stacks;
-    }
-    public string Id { get; private set; }
-    public string Surname { get; private set; }
-    public string Name { get; private set; }
-    public DateOnly BirthDate { get; private set; }
-    public List<string>? Stacks { get; private set; }
+    [Required]
+    [MaxLength(32)]
+    public string Apelido { get; set; }
+    [Required]
+    [MaxLength(100)]
+    public string Nome { get; set; }
+    [Required]
+    public DateTime Nascimento { get; set; }
+    [MaxLength(32)]
+    public List<string>? Stack { get; set; }
 }
