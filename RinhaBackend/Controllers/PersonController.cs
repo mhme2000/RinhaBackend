@@ -1,4 +1,3 @@
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using RinhaBackend.Models;
 using RinhaBackend.Repositories;
@@ -22,17 +21,17 @@ public class PersonController : ControllerBase
             return new ObjectResult(null){StatusCode = StatusCodes.Status422UnprocessableEntity};
         }
         
-        if(personDto.Stack != null){
-            foreach(var tech in personDto.Stack){
-                if(tech.Length >= 32){
-                    return new ObjectResult(null){StatusCode = StatusCodes.Status422UnprocessableEntity};
-                }
+        if(personDto.Stack != null)
+        {
+            if (personDto.Stack.Any(tech => tech.Length >= 32))
+            {
+                return new ObjectResult(null){StatusCode = StatusCodes.Status422UnprocessableEntity};
             }
         }
         var id = await _personRepository.CreatePerson(personDto);
         var interpolatedString = $"/pessoas/{id}";
         Response.Headers.Location = interpolatedString;
-        return new ObjectResult(id) { StatusCode = StatusCodes.Status201Created };
+        return new ObjectResult(null) { StatusCode = StatusCodes.Status201Created };
     }
 
     [HttpGet("pessoas/{id}")]
@@ -55,6 +54,6 @@ public class PersonController : ControllerBase
     public async Task<IActionResult> GetCountPersons()
     {
         var count = await _personRepository.CountPersons();
-        return Ok(count);
+        return Ok(new {count});
     }
 }

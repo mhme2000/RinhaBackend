@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace RinhaBackend.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,8 +15,9 @@ namespace RinhaBackend.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     Surname = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Stacks = table.Column<List<string>>(type: "text[]", nullable: true)
+                    BirthDate = table.Column<string>(type: "text", nullable: false),
+                    Stacks = table.Column<string>(type: "text", nullable: false),
+                    SearchText = table.Column<string>(type: "text", nullable: false, computedColumnSql: "(lower(\"Person\".\"Surname\" || \"Person\".\"Name\" || \"Person\".\"Stacks\"))", stored: true)
                 },
                 constraints: table =>
                 {

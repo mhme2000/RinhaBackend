@@ -7,14 +7,14 @@ namespace RinhaBackend.Models;
 public class Person
 {
     private Person(){}
-    public Person(string surname, string name, string birthDate, List<string> stacks)
+    public Person(string surname, string name, string birthDate, List<string>? stacks)
     {
         var t = Uuid7.TimeNs();
         Id = Uuid7.Guid(t).ToString();
         Surname = surname;
         Name = name;
         BirthDate = birthDate;
-        Stacks = string.Join(",",stacks.Select(t => t.ToString()));
+        Stacks = stacks != null ? string.Join(",",stacks.Select(t => t.ToString())) : "";
     }
     public string Id { get; private set; }
     public string Surname { get; private set; }
